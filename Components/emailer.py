@@ -1,10 +1,8 @@
-import os, smtplib, logging
+import os, smtplib
 from email.mime.text import MIMEText
 from email.mime.multipart import MIMEMultipart
 from cryptography.fernet import Fernet
 from smtplib import SMTPException
-
-logger = logging.getLogger(__name__)
 
 class Emailer:
 
@@ -15,7 +13,7 @@ class Emailer:
     smtp_port: bytes
 
     @classmethod
-    def setCredentials(cls, symmetric_key: bytes, login_email: bytes, login_password: bytes, smtp_server: bytes, smtp_port: bytes):
+    def setCredentials(cls, symmetric_key: bytes, login_email: bytes, login_password: bytes, smtp_server: bytes, smtp_port: bytes) -> None:
         cls.symmetric_key = symmetric_key
         cls.login_email = login_email
         cls.login_password = login_password
@@ -31,12 +29,12 @@ class Emailer:
             smtp_server = cipher.decrypt(cls.smtp_server).decode()
             smtp_port = cipher.decrypt(cls.smtp_port).decode()
         except Exception as e:
-            raise ValueError(f"Failed to decrypt credentials: {e}")
+            raise ValueError(f'Failed to decrypt credentials: {e}')
 
         return login_email, login_password, smtp_server, smtp_port
 
     @classmethod
-    def sendEmail(cls, recipient, subject, body, sender=None):
+    def sendEmail(cls, recipient, subject, body, sender=None) -> None:
         try:
             # Get decrypted credentials
             login_email, login_password, smtp_server, smtp_port = cls.accessCredentials()
@@ -57,9 +55,9 @@ class Emailer:
             server.sendmail(sender if sender else login_email, recipient, message.as_string())
             server.quit()
         except SMTPException as e:
-            logger.error(f"Failed to send email: {e}")
+            print(f'Failed to send email: {e}')
         except Exception as e:
-            logger.error(f"Unexpected error: {e}")
+            print(f'Unexpected error: {e}')
 
 if __name__ == '__main__':
     try:
@@ -72,11 +70,11 @@ if __name__ == '__main__':
         )
 
         # test email
-        recipient = 'phils-hub@outlook.com'
+        recipient = '...'
         subject = 'Test Email'
         body = 'This is a test email.'
 
         Emailer.sendEmail(recipient, subject, body)
 
     except Exception as e:
-        logger.exception(f"Error occurred: {e}")
+        print(f'Error occurred: {e}')

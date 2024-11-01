@@ -1,16 +1,8 @@
-import logging, platform
+import platform
 from enum import Enum
 
-logger = logging.getLogger(__name__)
-
 class ArchValidator:
-    """Single utility class for architecture validation.
-
-    Example usage:
-        result, message = ArchValidator.validate(ArchValidator.ArchValidatorEnum.X64)
-        if not result:
-            logger.error(message)
-    """
+    """ Single utility class for architecture validation. """
 
     class ArchValidationStatusEnum(Enum):
         """Validation status enum"""
@@ -24,8 +16,8 @@ class ArchValidator:
 
     # Mapping architecture strings to enum
     __ARCH_MAP = {
-        ArchValidatorEnum.X86: {"32", "x86", "i386", "i686", "arm", "armhf"},
-        ArchValidatorEnum.X64: {"64", "amd64", "x64", "x86_64", "arm64", "aarch64", "ppc64le", "s390x", "mips64", "riscv64"}
+        ArchValidatorEnum.X86: {'32', 'x86', 'i386', 'i686', 'arm', 'armhf'},
+        ArchValidatorEnum.X64: {'64', 'amd64', 'x64', 'x86_64', 'arm64', 'aarch64', 'ppc64le', 's390x', 'mips64', 'riscv64'}
     }
 
     @staticmethod
@@ -39,15 +31,13 @@ class ArchValidator:
 
         # Validate if the current architecture matches the expected architecture
         if current_arch.lower() in ArchValidator.__ARCH_MAP[expected_arch_enum]:
-            return True, "Architecture validated."
+            return True, 'Architecture validated.'
         
         return False, f"Expected architecture: '{expected_arch_enum.name}', but found: '{current_arch}'"
 
-if __name__ == "__main__":
-    logging.basicConfig(level=logging.DEBUG, format='%(asctime)s - %(levelname)s - %(message)s', datefmt='%Y-%m-%d %H:%M:%S')
-    logger = logging.getLogger(__name__)
-    logger.info("Loading arch validator independently...")
+if __name__ == '__main__':
+    print('Loading arch validator independently...')
 
     result, message = ArchValidator.validate(ArchValidator.ArchValidatorEnum.X64)
     if not result:
-        logger.info(message)
+        print(message)

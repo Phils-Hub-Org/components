@@ -1,7 +1,3 @@
-import logging
-
-logger = logging.getLogger(__name__)
-
 class GlobalsManager:
     """A class for managing globals"""
 
@@ -44,4 +40,4 @@ class GlobalsManager:
     def print_all(cls):
         """Print the global variables"""
         for key, value in cls.GLOBALS.items():
-            logger.info(f"{key}: {value}")
+            print(f"{key}: {value}")

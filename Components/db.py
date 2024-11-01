@@ -1,10 +1,8 @@
-import os, logging, mysql.connector
+import os, mysql.connector
 from datetime import datetime
 from mysql.connector import Error
 from cryptography.fernet import Fernet
 from contextlib import contextmanager
-
-logger = logging.getLogger(__name__)
 
 class DB:
     
@@ -220,14 +218,8 @@ class DB:
                 raise Exception(f"DB.add_column.error: {error}") from error
 
 if __name__ == "__main__":
-    # Dev mode ?
-    # Disable VPN
-    
     # Only mysql admin user acc has grant access for CREATE.
-
-    logging.basicConfig(level=logging.DEBUG, format='%(asctime)s - %(levelname)s - %(message)s', datefmt='%Y-%m-%d %H:%M:%S')
-    logger = logging.getLogger(__name__)
-    logger.info("Running db independently...")
+    print("Running db independently...")
 
     Env = 'DEV'
 

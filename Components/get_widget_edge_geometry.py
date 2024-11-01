@@ -1,6 +1,6 @@
 from PySide6.QtCore import QRect
 
-def getWidgetEdgeGeometry(screen_width, screen_height, edge: str, widget_width: int, widget_height: int) -> QRect:
+def getWidgetEdgeGeometry(screen_width: int, screen_height: int, edge: str, widget_width: int, widget_height: int) -> QRect:
 
     # Determine the position based on the edge argument
     if edge == 'top':

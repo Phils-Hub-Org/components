@@ -11,10 +11,10 @@ class ArchValidationStatusEnum(Enum):
     SUCCESS = 1
 
 class ArchValidator:
-    """ Single utility class for architecture validation. """
+    """Single utility class for architecture validation."""
 
     class ArchValidatorEnum(Enum):
-        """ Architecture types for validation. """
+        """Architecture types for validation."""
         X86 = 0
         X64 = 1
 
@@ -26,7 +26,7 @@ class ArchValidator:
 
     @staticmethod
     def validate(expected_arch_enum: 'ArchValidator.ArchValidatorEnum') -> tuple[bool, str]:
-        """ Validate the system architecture against expected architecture and return status and message. """
+        """Validate the system architecture against expected architecture and return status and message."""
         current_arch = platform.machine()
 
         # Check if the expected_arch_enum exists in the ARCH_MAP dictionary
@@ -45,15 +45,14 @@ class ArchValidator:
         
         return ArchValidationStatus(
             ArchValidationStatusEnum.FAILURE,
-            f"Expected architecture: '{expected_arch_enum.name}', but found: '{current_arch}'"
+            f'Expected architecture: \'{expected_arch_enum.name}\', but found: \'{current_arch}\''
         )
 
 # Example usage
 if __name__ == '__main__':
-    # An example where a program allows both 32-bit and 64-bit architectures
+    result = ArchValidator.validate(ArchValidator.ArchValidatorEnum.X64)
     
-    arch1 = ArchValidator.validate(ArchValidator.ArchValidatorEnum.X86)
-    arch2 = ArchValidator.validate(ArchValidator.ArchValidatorEnum.X64)
-
-    if arch1.status == ArchValidationStatusEnum.FAILURE and arch2.status == ArchValidationStatusEnum.FAILURE:
-        print(arch1.message, arch2.message)
+    if result.status == ArchValidationStatusEnum.SUCCESS:
+        print(result.message)
+    else:
+        print(result.message)

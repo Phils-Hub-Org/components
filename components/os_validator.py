@@ -27,7 +27,7 @@ class OSValidator:
     }
 
     @staticmethod
-    def validate(expected_os_enum: 'OSValidator.OSValidatorEnum') -> OSValidationStatus:
+    def validate(expected_os_enum: 'OSValidator.OSValidatorEnum') -> tuple[bool, str]:
         """Validate the operating system against the expected OS."""
         current_os = platform.system()
 
@@ -35,7 +35,7 @@ class OSValidator:
         if expected_os_enum not in OSValidator.__OS_MAP:
             return OSValidationStatus(
                 OSValidationStatusEnum.FAILURE,
-                f'Unknown operating system: {expected_os_enum.name}'
+                f'Unknown operating system: {expected_os_enum}'
             )
 
         # Validate if the current OS matches the expected OS
